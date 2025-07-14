@@ -19,6 +19,7 @@ export default function Home() {
             const res = await api.post("/login", { email, password });
             const token = res.data.token;
             localStorage.setItem("token", token);
+            localStorage.setItem("userId", res.data.user.id.toString());
             router.push("/photos");
         } catch (err) {
             console.error("Login error:", err);
