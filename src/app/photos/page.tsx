@@ -98,7 +98,7 @@ export default function PhotosPage() {
     return (
         <div className={styles.galleryWrapper}>
             <div className={styles.headerContainer}>
-                <h1 className={styles.header}>📷 投稿された写真</h1>
+                <h1 className={styles.header}>投稿された写真</h1>
                 <button className={styles.uploadButton} onClick={() => router.push("/upload")}>
                     ＋ 投稿
                 </button>
@@ -120,7 +120,11 @@ export default function PhotosPage() {
                     const hasError = imageErrors.has(photo.id);
 
                     return (
-                        <div key={photo.id} className={styles.photoCard}>
+                        <div
+                            key={photo.id}
+                            className={styles.photoCard}
+                            onClick={() => router.push(`/photos/${photo.id}`)}
+                        >
                             {hasError ? (
                                 <div className="w-full h-48 bg-gray-200 flex flex-col items-center justify-center">
                                     <div className="text-gray-400 mb-2">
@@ -165,8 +169,10 @@ export default function PhotosPage() {
                             )}
                             <div className={styles.photoTextBox}>
                                 <strong>{photo.title}</strong>
-                                <p>{photo.description}</p>
-                                <span className={styles.userName}>name : {photo.user.name}</span>
+                                <p>
+                                    <span className={styles.userName}>{photo.user.name}</span>
+                                    {photo.description}
+                                </p>
                             </div>
                         </div>
                     );
