@@ -1,0 +1,155 @@
+.editWrapper {
+    max-width: 375px;
+    margin: 0 auto 30px;
+    min-height: 100svh;
+    padding: 0.5rem;
+}
+
+.backButton {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0.5rem 0;
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.backButton:hover {
+    color: #222;
+}
+
+.arrow {
+    position: relative;
+    display: inline-block;
+    width: 7.7px;
+    height: 13.3px;
+}
+
+.arrow::before,
+.arrow::after {
+    content: "";
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 0;
+    width: 10px;
+    height: 2px;
+    border-radius: 100px;
+    background-color: #333;
+    transform-origin: 1px 50%;
+}
+
+.arrow::before {
+    transform: rotate(45deg);
+}
+
+.arrow::after {
+    transform: rotate(-45deg);
+}
+
+.backButton:hover .arrow {
+    border-right-color: #222;
+}
+
+.editCard {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.editTitle {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.inputGroup {
+    margin-bottom: 1rem;
+}
+
+.label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #49b0cc;
+    box-shadow: 0 0 0 3px rgba(73, 176, 204, 0.1);
+}
+
+.textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    min-height: 100px;
+    resize: vertical;
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.textarea:focus {
+    outline: none;
+    border-color: #49b0cc;
+    box-shadow: 0 0 0 3px rgba(73, 176, 204, 0.1);
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.updateButton {
+    background: #49b0cc;
+    color: #fefefe;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    flex: 1;
+}
+
+.updateButton:hover {
+    background: #3a9bb5;
+}
+
+.cancelButton {
+    background: #6b7280;
+    color: #fefefe;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    flex: 1;
+}
+
+.cancelButton:hover {
+    background: #4b5563;
+}
