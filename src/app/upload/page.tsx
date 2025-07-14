@@ -108,7 +108,7 @@ export default function UploadPage() {
     return (
         <div className={styles.container}>
             <form onSubmit={handleSubmit} className={styles.card}>
-                <h1 className={styles.title}>📷 写真を投稿</h1>
+                <h1 className={styles.title}>写真を投稿</h1>
 
                 {error && <p className={styles.error}>{error}</p>}
 
