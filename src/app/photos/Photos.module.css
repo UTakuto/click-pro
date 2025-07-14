@@ -1,16 +1,15 @@
 .galleryWrapper {
-    padding: 1rem;
     max-width: 375px;
-    margin: 0 auto;
-    min-height: 100vh;
-    background-color: #f8f9fa;
+    margin: 0 auto 30px;
+    min-height: 100svh;
+    /* background-color: #f8f9fa; */
 }
 
 .headerContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin: 0.5rem 0;
     padding: 0.5rem 0;
 }
 
@@ -23,7 +22,7 @@
 
 .uploadButton {
     background: #49b0cc;
-    color: white;
+    color: #fefefe;
     border: none;
     border-radius: 20px;
     padding: 0.5rem 1rem;
@@ -59,7 +58,7 @@
 }
 
 .photoCard {
-    background: white;
+    background: #ffffff;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     overflow: hidden;
@@ -79,7 +78,7 @@
 }
 
 .photoTextBox {
-    padding: 1rem;
+    padding: 8px 12px;
 }
 
 .photoTextBox strong {
@@ -94,13 +93,13 @@
     color: #6b7280;
     font-size: 0.875rem;
     line-height: 1.4;
-    margin-bottom: 0.75rem;
 }
 
 .userName {
-    color: #9ca3af;
+    padding-right: 4px;
+    color: #333;
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: bold;
 }
 
 @media (max-width: 768px) {
