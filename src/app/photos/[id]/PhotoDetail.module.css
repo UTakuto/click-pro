@@ -1,0 +1,151 @@
+.detailWrapper {
+    max-width: 375px;
+    margin: 0 auto 30px;
+    min-height: 100svh;
+    padding: 0.5rem;
+}
+
+.backButton {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0.5rem 0;
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.backButton:hover {
+    color: #222;
+}
+
+.arrow {
+    position: relative;
+    display: inline-block;
+    width: 7.7px;
+    height: 13.3px;
+}
+
+.arrow::before,
+.arrow::after {
+    content: "";
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 0;
+    width: 10px;
+    height: 2px;
+    border-radius: 100px;
+    background-color: #333;
+    transform-origin: 1px 50%;
+}
+
+.arrow::before {
+    transform: rotate(45deg);
+}
+
+.arrow::after {
+    transform: rotate(-45deg);
+}
+.backButton:hover .arrow {
+    border-right-color: #222;
+}
+
+.photoContainer {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+.photoImage {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.photoInfo {
+    padding: 1rem;
+}
+
+.photoTitle {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.photoDescription {
+    color: #666;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+}
+
+.photoAuthor {
+    color: #333;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding-right: 4px;
+}
+
+.actionButtons {
+    display: flex;
+    gap: 0.5rem;
+    padding-bottom: 1rem;
+}
+
+.editButton {
+    background: #49b0cc;
+    color: #fefefe;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    flex: 1;
+}
+
+.editButton:hover {
+    background: #3a9bb5;
+}
+
+.deleteButton {
+    background: #dc2626;
+    color: #fefefe;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    flex: 1;
+}
+
+.deleteButton:hover {
+    background: #b91c1c;
+}
+
+.loadingText {
+    text-align: center;
+    color: #666;
+    font-size: 0.875rem;
+    padding: 2rem;
+}
+
+.errorText {
+    text-align: center;
+    color: #dc2626;
+    font-size: 0.875rem;
+    padding: 2rem;
+    background-color: #fef2f2;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
