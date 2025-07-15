@@ -42,7 +42,7 @@ export default function EditPhotoPage() {
 
         try {
             const token = localStorage.getItem("token");
-            await api.put(
+            await api.patch(
                 `/photos/${params.id}`,
                 { title: title.trim(), description: description.trim() },
                 { headers: { Authorization: `Bearer ${token}` } }
