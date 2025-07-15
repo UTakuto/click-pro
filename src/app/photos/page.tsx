@@ -19,12 +19,56 @@ export default function PhotosPage() {
     const [photos, setPhotos] = useState<Photo[]>([]);
     const [error, setError] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
     const [imageLoadingStates, setImageLoadingStates] = useState<
         Map<number, "loading" | "loaded" | "error">
     >(new Map());
 
     useEffect(() => {
+        // ログイン状態を確認
+        const checkAuthStatus = async () => {
+            const token = localStorage.getItem("token");
+            const userId = localStorage.getItem("userId");
+
+            if (!token || !userId) {
+                setIsLoggedIn(false);
+                return;
+            }
+
+            try {
+                // tokenの有効性をAPIで確認
+                const response = await api.get("/auth/verify", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                // tokenが有効な場合
+                if (response.status === 200) {
+                    setIsLoggedIn(true);
+                } else {
+                    // tokenが無効な場合
+                    handleLogout();
+                }
+            } catch (error) {
+                console.error("Token verification failed:", error);
+                // 認証エラーの場合はログアウト
+                handleLogout();
+            }
+        };
+
+        const handleLogout = () => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("userId");
+            setIsLoggedIn(false);
+        };
+
+        checkAuthStatus();
+
+        // 定期的にtoken有効性をチェック（5分ごと）
+        const authCheckInterval = setInterval(checkAuthStatus, 5 * 60 * 1000);
+
         const fetchPhotos = async () => {
             try {
                 setLoading(true);
@@ -40,6 +84,10 @@ export default function PhotosPage() {
 
                     if (axiosError.response?.status === 401) {
                         setError("認証が必要です。ログインしてください。");
+                        // 認証エラーの場合はログアウト処理
+                        localStorage.removeItem("token");
+                        localStorage.removeItem("userId");
+                        setIsLoggedIn(false);
                     } else if (axiosError.response?.status === 403) {
                         setError("アクセス権限がありません。");
                     } else {
@@ -58,6 +106,11 @@ export default function PhotosPage() {
         };
 
         fetchPhotos();
+
+        // cleanup function
+        return () => {
+            clearInterval(authCheckInterval);
+        };
     }, []);
 
     const handleImageError = (photoId: number) => {
@@ -95,13 +148,29 @@ export default function PhotosPage() {
         });
     };
 
+    const handlePhotoClick = (photoId: number) => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            setIsLoggedIn(false);
+            router.push("/");
+            return;
+        }
+        router.push(`/photos/${photoId}`);
+    };
+
     return (
         <div className={styles.galleryWrapper}>
             <div className={styles.headerContainer}>
                 <h1 className={styles.header}>投稿された写真</h1>
-                <button className={styles.uploadButton} onClick={() => router.push("/upload")}>
-                    ＋ 投稿
-                </button>
+                {isLoggedIn ? (
+                    <button className={styles.uploadButton} onClick={() => router.push("/upload")}>
+                        ＋ 投稿
+                    </button>
+                ) : (
+                    <button className={styles.uploadButton} onClick={() => router.push("/")}>
+                        ログイン
+                    </button>
+                )}
             </div>
 
             {loading && <p>読み込み中...</p>}
@@ -123,7 +192,7 @@ export default function PhotosPage() {
                         <div
                             key={photo.id}
                             className={styles.photoCard}
-                            onClick={() => router.push(`/photos/${photo.id}`)}
+                            onClick={() => handlePhotoClick(photo.id)}
                         >
                             {hasError ? (
                                 <div className="w-full h-48 bg-gray-200 flex flex-col items-center justify-center">
