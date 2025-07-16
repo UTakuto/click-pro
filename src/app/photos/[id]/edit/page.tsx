@@ -22,6 +22,18 @@ export default function EditPhotoPage() {
                 setError("");
             } catch (err) {
                 console.error("Photo fetch error:", err);
+                if (err && typeof err === "object" && "response" in err) {
+                    const axiosError = err as {
+                        response?: { status?: number };
+                    };
+                    if (axiosError.response?.status === 401) {
+                        // 認証エラーの場合はログアウト処理
+                        localStorage.removeItem("token");
+                        localStorage.removeItem("userId");
+                        router.push("/");
+                        return;
+                    }
+                }
                 setError("写真の取得に失敗しました");
             } finally {
                 setLoading(false);
@@ -29,7 +41,7 @@ export default function EditPhotoPage() {
         };
 
         fetchPhoto();
-    }, [params.id]);
+    }, [params.id, router]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -50,6 +62,18 @@ export default function EditPhotoPage() {
             router.push(`/photos/`);
         } catch (err) {
             console.error("Update error:", err);
+            if (err && typeof err === "object" && "response" in err) {
+                const axiosError = err as {
+                    response?: { status?: number };
+                };
+                if (axiosError.response?.status === 401) {
+                    // 認証エラーの場合はログアウト処理
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("userId");
+                    router.push("/");
+                    return;
+                }
+            }
             setError("更新に失敗しました");
         }
     };
