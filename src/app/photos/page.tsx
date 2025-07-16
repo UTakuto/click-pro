@@ -37,24 +37,32 @@ export default function PhotosPage() {
             }
 
             try {
-                // tokenの有効性をAPIで確認
-                const response = await api.get("/auth/verify", {
+                // 既存のphotos APIでtoken有効性をチェック
+                await api.get("/photos", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-
-                // tokenが有効な場合
-                if (response.status === 200) {
-                    setIsLoggedIn(true);
-                } else {
-                    // tokenが無効な場合
-                    handleLogout();
-                }
+                // API呼び出しが成功した場合、tokenは有効
+                setIsLoggedIn(true);
             } catch (error) {
                 console.error("Token verification failed:", error);
                 // 認証エラーの場合はログアウト
-                handleLogout();
+                if (error && typeof error === "object" && "response" in error) {
+                    const axiosError = error as {
+                        response?: { status?: number };
+                    };
+                    if (axiosError.response?.status === 401) {
+                        handleLogout();
+                    } else {
+                        // 401以外のエラー（ネットワークエラーなど）の場合は、
+                        // tokenがあることを前提にログイン状態を維持
+                        setIsLoggedIn(true);
+                    }
+                } else {
+                    // その他のエラーの場合も、tokenがあることを前提にログイン状態を維持
+                    setIsLoggedIn(true);
+                }
             }
         };
 
@@ -66,8 +74,8 @@ export default function PhotosPage() {
 
         checkAuthStatus();
 
-        // 定期的にtoken有効性をチェック（5分ごと）
-        const authCheckInterval = setInterval(checkAuthStatus, 5 * 60 * 1000);
+        // 定期的にtoken有効性をチェック（10分ごと）
+        const authCheckInterval = setInterval(checkAuthStatus, 10 * 60 * 1000);
 
         const fetchPhotos = async () => {
             try {
